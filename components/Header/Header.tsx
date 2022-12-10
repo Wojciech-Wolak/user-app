@@ -1,9 +1,17 @@
 import Link from "next/link";
+import { useRouter } from "next/router";
 import React from "react";
 import { routes } from "../../config/routes";
 import Search from "../Search/Search";
 
 const Header = () => {
+  const router = useRouter()
+
+  const handleLogout = () => {
+    localStorage.removeItem("user");
+    router.push("/")
+  }
+
   return (
     <div className="header__wrapper">
       <header className="header">
@@ -17,6 +25,7 @@ const Header = () => {
           )}
         </nav>
         <Search />
+        <button className="header__logoutBtn" onClick={handleLogout}>Log out</button>
       </header>
     </div>
   );

@@ -6,7 +6,7 @@
     padding: 0 16px;
     height: 100%;
     align-items: center;
-    justify-content: space-between;
+    gap: 16px;
 
     &__wrapper{
         position: sticky;
@@ -22,6 +22,7 @@
     &__nav {
         display: flex;
         gap: 16px;
+        flex: 1;
     }
 
     &__navLink {
@@ -34,5 +35,10 @@
         @media screen and (min-width: 767px) {
             font-size: 24px;
         }
+    }
+
+    &__logoutBtn {
+        padding: 8px;
+        cursor: pointer;
     }
 }
