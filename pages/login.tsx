@@ -5,21 +5,31 @@ import { useRouter } from 'next/router'
 
 const LoginPage = () => {
     const router = useRouter()
+    const [errorMsg, setErrorMsg] = useState<string>("")
     const [inputs, setInputs] = useState<{email:string, password:string}>({
         email: "",
         password: "",
     })
 
-    const handleLogin = (e: React.FormEvent<HTMLFormElement>) => {
+    const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
 
-        fetch("/api/login", {
+        const res = await fetch("/api/login", {
             method: "POST",
             body: JSON.stringify({
                 email: inputs.email,
                 password: inputs.password,
             })
         })
+
+        const data = await res.json();
+
+        if(data.status === "success"){
+            localStorage.setItem('user', JSON.stringify(data.data))
+            router.push("/")
+        }else {
+            setErrorMsg(data.message)
+        }
     }
 
   return (
@@ -40,6 +50,7 @@ const LoginPage = () => {
             >
                 Log in
             </button>
+            {errorMsg ? <p className='login__errorMsg'>{errorMsg}</p>:null}
             <Link className='login__link' href="/register">Do not have an account?</Link>
             <Link className='login__link' href="/register">Forgot your password?</Link>
         </form>

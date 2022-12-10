@@ -37,6 +37,11 @@
         cursor: pointer;
     }
 
+    &__errorMsg {
+        color: red;
+        margin: 0;
+    }
+
     &__link {
         padding: 4px;
         border-radius: 4px;
