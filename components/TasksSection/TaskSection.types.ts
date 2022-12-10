@@ -7,3 +7,7 @@ export type TaskType = {
 export type ActionType = 
     | {type: "add", payload: TaskType}
     | {type: "remove", payload: string}
+
+export type TaskSectionProps = {
+    title?: string;
+}

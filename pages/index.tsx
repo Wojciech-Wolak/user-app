@@ -13,8 +13,7 @@ export default function Home() {
 
       <main>
         <Container className='home__row'>
-          <TasksSection />
-          <TasksSection />
+          <TasksSection title="Task list" />
         </Container>
       </main>
     </div>

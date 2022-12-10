@@ -1,8 +1,9 @@
 import React, { useReducer, useState } from 'react'
 import { formatDate } from 'utils/formatDate'
 import { taskReducer } from './TaskSection.reducer'
+import { TaskSectionProps } from './TaskSection.types'
 
-const TasksSection = () => {
+const TasksSection = ({ title }: TaskSectionProps) => {
     const [inputValue, setInputValue] = useState<string>("")
     const [tasks, dispatch] = useReducer(taskReducer, [])
 
@@ -19,6 +20,7 @@ const TasksSection = () => {
 
   return (
     <div className='taskSection'>
+        {title ? <h2 className='taskSection__heading' >{title}</h2> : null}
         <div className='taskSection__inputWrapper'>
             <input 
                 className='taskSection__input' 

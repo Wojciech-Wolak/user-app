@@ -7,10 +7,10 @@ const Header = () => {
   return (
     <div className="header__wrapper">
       <header className="header">
-        <nav>
+        <nav className="header__nav">
           {routes.map((route) =>
             route.showInNav ? (
-              <Link key={route.name} href={route.path}>
+              <Link className="header__navLink" key={route.name} href={route.path}>
                 {route.name}
               </Link>
             ) : null

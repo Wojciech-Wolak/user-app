@@ -3,6 +3,10 @@
     margin: 16px;
     background-color: #242424;
 
+    &__heading {
+        padding: 0 16px;
+    }
+
     &__inputWrapper {
         padding: 16px;
         gap: 16px;
