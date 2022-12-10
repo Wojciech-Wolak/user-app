@@ -1,0 +1,49 @@
+.taskSection {
+    border: 1px solid gray;
+    margin: 16px;
+
+    &__inputWrapper {
+        padding: 16px;
+        gap: 16px;
+        border-bottom: 1px solid gray;
+        display: flex;
+    }
+
+    &__input {
+        flex: 1;
+    }
+
+    &__inputButton {
+        padding: 4px 16px;
+        cursor: pointer;
+    }
+
+    &__list {
+        display: flex;
+        flex-direction: column;
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    }
+
+    &__listItem {
+        padding: 8px;
+        display: flex;
+        align-items: center;
+        gap: 16px;
+
+        &:not(:last-child){
+            border-bottom: 1px solid gray;
+        }
+    }
+
+    &__listItemContent {
+        flex:1;
+    }
+
+    &__listItemRemoveBtn {
+        padding: 8px;
+        bordeR: none;
+        cursor: pointer;
+    }
+}

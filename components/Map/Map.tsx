@@ -11,7 +11,7 @@ const Map = ({lat, lng}: MapProps) => {
   })
 
   return (
-    <MapContainer className='map' center={[lat, lng]} zoom={7} scrollWheelZoom={false}>
+    <MapContainer className='map' center={[lat, lng]} zoom={7} zoomControl={false}>
         <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
         <Marker position={[lat, lng]} icon={icon} />
     </MapContainer>

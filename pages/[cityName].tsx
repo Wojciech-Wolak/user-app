@@ -7,6 +7,7 @@ import Container from 'components/Container/Container';
 import dynamic from 'next/dynamic';
 
 import "leaflet/dist/leaflet.css";
+import Head from 'next/head';
 
 const getCountryInfo = async (id: string) => {
   const res = await fetch("/api/get-location", {
@@ -41,6 +42,9 @@ const CityPage = () => {
 
   return (
     <div>
+      <Head>
+        <title>{data.result.name}</title>
+      </Head>
       <Container className='city__wrapper'>
         <CountryTable country={data.result} />
         <Map lng={data.result.longitude} lat={data.result.latitude} />
