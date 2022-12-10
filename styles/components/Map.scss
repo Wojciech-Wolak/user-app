@@ -1,0 +1,25 @@
+.map {
+    width: 100%;
+    min-height: 400px;
+
+    .leaflet-marker-icon {
+        border: none;
+        border-radius: 15px 15px 0 0;
+        clip-path: polygon(0% 0%, 100% 0%, 100% 15px, 50% 100%, 0% 15px);
+        background-color: black;
+        overflow: hidden;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 1px;
+    }
+
+    &__markerIcon{
+        display: block;
+        border-radius: 14px 14px 0 0;
+        clip-path: polygon(0% 0%, 100% 0%, 100% 14px, 50% calc(100% - 1px), 0% 14px);
+        width: 100%;
+        height: 100%;
+        background-color: aquamarine;
+    }
+}
