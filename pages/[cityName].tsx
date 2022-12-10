@@ -28,7 +28,7 @@ const CityPage = () => {
     return <h1>Loading...</h1>
   }
 
-  if(error || !data){
+  if(error || !data?.result){
     return <div>
       <pre>
         {JSON.stringify(error, null, 2)}
@@ -37,6 +37,7 @@ const CityPage = () => {
   }
 
   const Map = dynamic(()=>import("components/Map/Map"))
+  const WeatherCharts = dynamic(()=>import("components/WeatherCharts/WeatherCharts"))
 
   return (
     <div>
@@ -44,37 +45,11 @@ const CityPage = () => {
         <CountryTable country={data.result} />
         <Map lng={data.result.longitude} lat={data.result.latitude} />
       </Container>
+      <Container>
+        <WeatherCharts lng={data.result.longitude} lat={data.result.latitude} />
+      </Container>
     </div>
   )
 }
 
 export default CityPage
-
-// export const getStaticPaths: () => Promise<{
-//   paths: { params: { cityName: string } }[];
-//   fallback: string;
-// }> = async () => {
-//   return {
-//     paths: [],
-//     fallback: 'blocking'
-//   }
-// }
-
-// export const getStaticProps = async ({ params, ...rst }: InferGetStaticPaths<typeof getStaticPaths>) => {
-//   const res = await fetch(`${process.env.HOST_URL}/api/get-location`, {
-//     method: "POST",
-//     body: JSON.stringify({id: params?.cityName})
-//   })
-
-//   console.log('rst', rst)
-
-//   const results = await res.json()
-
-//   return {
-//     props: {
-//       hello: "world",
-//       name: params?.cityName,
-//       results
-//     }
-//   }
-// }

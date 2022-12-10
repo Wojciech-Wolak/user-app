@@ -1,0 +1,35 @@
+.weatherChart {
+    
+
+    &__row{
+        height: 700px;
+        position: relative;
+        width: 100%;
+        display: flex;
+        margin: 128px 0;
+        padding: 0 32px;
+        gap: 128px;
+        flex-direction: column;
+
+        @media screen and (min-width: 1280px) {
+            flex-direction: row;
+            height: 350px;
+        }
+    }
+
+    &__col {
+        flex: 1;
+
+        .Series g {
+            & > circle {
+            opacity: 1 !important;
+            r: 1px !important;
+
+            }
+        }
+
+        text {
+            fill: white !important;
+        }
+    }
+}
