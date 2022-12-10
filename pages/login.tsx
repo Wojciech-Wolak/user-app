@@ -39,10 +39,16 @@ const LoginPage = () => {
             <input 
                 className='login__input login__input--email' 
                 onChange={(e) => setInputs(prev => ({...prev, email: e.target.value}))}
+                value={inputs.email}
+                name="email"
+                placeholder="Email"
             />
             <input 
                 className='login__input login__input--password' 
                 onChange={(e) => setInputs(prev => ({...prev, password: e.target.value}))}
+                value={inputs.password}
+                name="password"
+                placeholder="Password"
             />
             <button 
                 className='login__button' 

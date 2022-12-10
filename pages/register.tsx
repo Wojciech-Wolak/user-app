@@ -1,8 +1,12 @@
 import React, { useState } from 'react'
 import Container from 'components/Container/Container'
 import Link from 'next/link'
+import { RSC_MODULE_TYPES } from 'next/dist/shared/lib/constants'
+import { useRouter } from 'next/router'
 
 const RegisterPage = () => {
+    const router = useRouter();
+    const [errorMsg, setErrorMsg] = useState<string>("");
     const [inputs, setInputs] = useState<{login:string, password:string, confirmPassword:string, email:string}>({
         login: "",
         password: "",
@@ -10,13 +14,21 @@ const RegisterPage = () => {
         email: "",
     })
 
-    const handleRegister = (e: React.FormEvent<HTMLFormElement>) => {
+    const handleRegister = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
 
-        fetch("/api/register", {
+        const res = await fetch("/api/register", {
             method: "POST",
             body: JSON.stringify(inputs),
-        }).then(res => res.json()).then(data => console.log(data))
+        })
+
+        const data = await res.json();
+
+        if(data.status === 'success'){
+            router.push("/login")
+        }else {
+            setErrorMsg(data.message)
+        }
     }
 
   return (
@@ -51,6 +63,7 @@ const RegisterPage = () => {
                 name="confirmPassword"
                 placeholder="Confirm Password"
             />
+            {errorMsg ? <p className='register__errorMsg'>{errorMsg}</p>:null}
             <button 
                 className='register__button' 
                 type="submit"

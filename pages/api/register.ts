@@ -15,6 +15,11 @@ export default async function handler(
 ) {
   const body = JSON.parse(req.body)
 
+  if(!body.email || !body.login || !body.password){
+    res.status(400).json({ status: 'error', message:"Please, fill all fields" })
+  }
+
+
   const response = await fetch(`https://api.airtable.com/v0/${process.env.AIRTABLE_USERS_BASE}/Users`, {
     method: "POST",
     headers:{

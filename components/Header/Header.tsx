@@ -9,7 +9,8 @@ const Header = () => {
 
   const handleLogout = () => {
     localStorage.removeItem("user");
-    router.push("/")
+    router.push("/");
+    router.reload();
   }
 
   return (

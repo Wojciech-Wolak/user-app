@@ -32,6 +32,11 @@
         padding: 8px;
     }
 
+    &__errorMsg {
+        color: red;
+        margin: 0;
+    }
+
     &__button {
         padding: 8px;
         cursor: pointer;
