@@ -5,16 +5,21 @@ import { useRouter } from 'next/router'
 
 const LoginPage = () => {
     const router = useRouter()
-    const [inputs, setInputs] = useState<{login:string, password:string}>({
-        login: "",
+    const [inputs, setInputs] = useState<{email:string, password:string}>({
+        email: "",
         password: "",
     })
 
     const handleLogin = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
 
-        localStorage.setItem("user", JSON.stringify(inputs))
-        router.push("/")
+        fetch("/api/login", {
+            method: "POST",
+            body: JSON.stringify({
+                email: inputs.email,
+                password: inputs.password,
+            })
+        })
     }
 
   return (
@@ -22,8 +27,8 @@ const LoginPage = () => {
         <form className='login__form' onSubmit={handleLogin}>
             <h2 className='login__heading'>Login</h2>
             <input 
-                className='login__input login__input--login' 
-                onChange={(e) => setInputs(prev => ({...prev, login: e.target.value}))}
+                className='login__input login__input--email' 
+                onChange={(e) => setInputs(prev => ({...prev, email: e.target.value}))}
             />
             <input 
                 className='login__input login__input--password' 
