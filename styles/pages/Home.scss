@@ -1,0 +1,14 @@
+.home {
+  &__row{
+    display: flex;
+    flex-direction: column;
+
+    @media screen and (min-width: 910px) {
+      flex-direction: row;
+
+      & > * {
+        flex: 1;
+      }
+    }
+  }
+}

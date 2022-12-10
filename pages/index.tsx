@@ -12,7 +12,8 @@ export default function Home() {
       </Head>
 
       <main>
-        <Container>
+        <Container className='home__row'>
+          <TasksSection />
           <TasksSection />
         </Container>
       </main>
