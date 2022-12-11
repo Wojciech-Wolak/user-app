@@ -2,17 +2,19 @@ import Container from 'components/Container/Container'
 import Form from 'components/Form/Form'
 import { useRouter } from 'next/router'
 import React, { useState } from 'react'
-import { UserForgotPasswordEmailFields } from 'types/User'
+import { UserNewPasswordFields } from 'types/User'
 
 const ForgotPassword = () => {
     const router = useRouter()
     const [errorMsg, setErrorMsg] = useState<string>("")
-    const [inputs, setInputs] = useState<UserForgotPasswordEmailFields>({
-        email: "",
+    const [inputs, setInputs] = useState<UserNewPasswordFields>({
+        password: "",
+        confirmPassword: "",
     })
 
-    const forgotPasswordFields: React.ComponentProps<typeof Form<keyof UserForgotPasswordEmailFields>>['fields'] = [
-        { name: "email", label: "E-mail", type: "email" },
+    const forgotPasswordFields: React.ComponentProps<typeof Form<keyof UserNewPasswordFields>>['fields'] = [
+        { name: "password", label: "Password", type: "password" },
+        { name: "confirmPassword", label: "Confirm password", type: "password" },
     ]
 
     const sendCode = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -21,7 +23,7 @@ const ForgotPassword = () => {
 
   return (
     <Container className='forgotPassword'>
-        <Form<keyof UserForgotPasswordEmailFields>
+        <Form<keyof UserNewPasswordFields>
             fields={forgotPasswordFields}
             errorMsg={errorMsg}
             heading="Pass your email address"
@@ -29,7 +31,7 @@ const ForgotPassword = () => {
             handler={sendCode}
             inputs={inputs}
             buttons={[
-                { content: "Get code", type: "submit" }
+                { content: "Change password", type: "submit" }
             ]}
         />
     </Container>
