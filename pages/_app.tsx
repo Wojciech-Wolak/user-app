@@ -7,6 +7,7 @@ import { useRouter } from 'next/router'
 import Container from 'components/Container/Container'
 import Link from 'next/link'
 import { Amplify } from 'aws-amplify'
+import { routes } from 'config/routes'
 
 const queryClient = new QueryClient()
 
@@ -32,7 +33,7 @@ export default function App({ Component, pageProps }: AppProps) {
     }
   }, [router])
 
-  if(!isLogged && !router.pathname.includes("login") && !router.pathname.includes("register")){
+  if(!isLogged && routes.find(el => router.pathname === (el.path))?.requireLogin){
     return (
       <>
         <Header />

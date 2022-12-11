@@ -58,7 +58,7 @@ const LoginPage = () => {
             </button>
             {errorMsg ? <p className='login__errorMsg'>{errorMsg}</p>:null}
             <Link className='login__link' href="/register">Do not have an account?</Link>
-            <Link className='login__link' href="/register">Forgot your password?</Link>
+            <Link className='login__link' href="/forgot-password">Forgot your password?</Link>
         </form>
     </Container>
   )

@@ -11,3 +11,9 @@ export type UserRegisterFields = {
 export type UserVerificationFields = {
     code: string
 }
+
+export type UserForgotPasswordFields = {
+    email: string;
+    password: string;
+    confirmPassword: string;    
+}
