@@ -28,8 +28,14 @@
         }
     }
 
+    &__inputHeading{
+        margin: 0;
+        font-weight: 500;
+    }
+
     &__input {
         padding: 8px;
+        width: 100%;
     }
 
     &__errorMsg {

@@ -1,7 +1,7 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
-import { createHash } from 'crypto'
 import type { NextApiRequest, NextApiResponse } from 'next';
-import fetch from 'node-fetch';
+import { Auth } from 'aws-amplify'
+import { UserRegisterFields } from 'types/User';
 
 type ResponseData = {
   status: string;
@@ -13,29 +13,26 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse<ResponseData>
 ) {
-  const body = JSON.parse(req.body)
+  const body: UserRegisterFields = JSON.parse(req.body)
 
-  if(!body.email || !body.login || !body.password){
+  if(Object.values(body).some(el => !el.length)){
     res.status(400).json({ status: 'error', message:"Please, fill all fields" })
   }
 
-
-  const response = await fetch(`https://api.airtable.com/v0/${process.env.AIRTABLE_USERS_BASE}/Users`, {
-    method: "POST",
-    headers:{
-        Authorization: `Bearer ${process.env.AIRTABLE_API_KEY}`,
-        "Content-Type": "application/json"
+  const registerRes = await Auth.signUp({
+    password: body.password,
+    username: body.email,
+    attributes: {
+      email: body.email,
+      nickname: body.nickname,
+      given_name: body.firstname + body.lastname,
+      birthdate: body.birthdate,
     },
-    body: JSON.stringify({
-      fields: {
-        Email: body.email,
-        Login: body.login,
-        Password: body.password
-      }
-    })
   })
 
-  const data = await response.json()
-
-  res.status(200).json({ status: 'success', data })
+  if(registerRes.user){
+    res.status(200).json({ status: 'success', data: registerRes })
+  }else {
+    res.status(400).json({ status: 'error', message:"Something went wrong" })
+  }
 }
