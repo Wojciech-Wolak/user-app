@@ -6,7 +6,9 @@
 @import "./components/WeatherChart.scss";
 @import "./components/TaskSection.scss";
 @import "./components/Form.scss";
-@import "./components/SuccessInfo.scss";
+@import "./components/InfoTile.scss";
+
+@import "./other/notLoggedInfo.scss";
 
 @import "./pages/City.scss";
 @import "./pages/Home.scss";

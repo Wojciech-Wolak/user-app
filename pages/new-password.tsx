@@ -1,6 +1,6 @@
 import Container from 'components/Container/Container'
 import Form from 'components/Form/Form'
-import SuccessInfo from 'components/SuccessInfo/SuccessInfo'
+import InfoTile from 'components/InfoTile/InfoTile'
 import { useRouter } from 'next/router'
 import React, { useState } from 'react'
 import { UserNewPasswordFields } from 'types/User'
@@ -55,14 +55,14 @@ const ForgotPassword = () => {
     if(isSuccess) {
         return (
             <Container className='forgotPassword'>
-                <SuccessInfo title="Password changed">
+                <InfoTile title="Password changed">
                     <button 
                         className='forgotPassword__button'
                         onClick={() => router.push("/login")}
                     >
                         Go to login page
                     </button>
-                </SuccessInfo>
+                </InfoTile>
             </Container>
         )
     }

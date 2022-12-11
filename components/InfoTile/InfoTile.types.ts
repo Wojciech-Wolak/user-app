@@ -1,4 +1,4 @@
-export type SuccessInfoProps = {
+export type InfoTileProps = {
     title: string;
     children: React.ReactNode;
 }

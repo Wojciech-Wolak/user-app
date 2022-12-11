@@ -15,7 +15,7 @@ export const routes: RouteType[] = [
     requireLogin: true,
   },
   {
-    path: "/:cityId",
+    path: "/[cityName]",
     name: "Miasto",
     showInNav: false,
     requireLogin: true,

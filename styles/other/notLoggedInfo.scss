@@ -1,0 +1,19 @@
+.notLoggedInfo {
+    display: flex;
+    justify-content: center;
+
+    &__message {
+        text-align: center;
+        font-size: 24px;
+
+        a {
+            color: aquamarine;
+            font-weight: 700;
+
+            &:hover,
+            &:focus-visible {
+                color: gray;
+            }
+        }
+    }
+}
