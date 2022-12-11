@@ -17,7 +17,7 @@ export type UserForgotPasswordEmailFields = {
 }
 
 export type UserForgotPasswordCodeFields = {
-    email: string;
+    code: string;
 }
 
 export type UserNewPasswordFields = {

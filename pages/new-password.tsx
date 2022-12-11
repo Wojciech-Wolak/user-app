@@ -1,11 +1,13 @@
 import Container from 'components/Container/Container'
 import Form from 'components/Form/Form'
+import SuccessInfo from 'components/SuccessInfo/SuccessInfo'
 import { useRouter } from 'next/router'
 import React, { useState } from 'react'
 import { UserNewPasswordFields } from 'types/User'
 
 const ForgotPassword = () => {
     const router = useRouter()
+    const [isSuccess, setIsSuccess] = useState<boolean>(false)
     const [errorMsg, setErrorMsg] = useState<string>("")
     const [inputs, setInputs] = useState<UserNewPasswordFields>({
         password: "",
@@ -19,6 +21,50 @@ const ForgotPassword = () => {
 
     const sendCode = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
+        const { query } = router
+
+        if(inputs.password !== inputs.confirmPassword){
+            setErrorMsg("Password are different")
+            return;
+        }
+
+        if(query.email && query.code){
+            console.log(query)
+            const res = await fetch("/api/change-password", {
+                method: "POST",
+                body: JSON.stringify({
+                    email: query.email,
+                    code: query.code,
+                    password: inputs.password,
+                })
+            })
+
+            const data = await res.json()
+
+            if(data.status === 'success'){
+                setIsSuccess(true)
+            }else {
+                setErrorMsg(data.message)
+            }
+        }else {
+            setErrorMsg("Url is invalid. Please try again to change your password")
+        }
+
+    }
+
+    if(isSuccess) {
+        return (
+            <Container className='forgotPassword'>
+                <SuccessInfo title="Password changed">
+                    <button 
+                        className='forgotPassword__button'
+                        onClick={() => router.push("/login")}
+                    >
+                        Go to login page
+                    </button>
+                </SuccessInfo>
+            </Container>
+        )
     }
 
   return (
