@@ -1,3 +1,4 @@
+import { Auth } from 'aws-amplify'
 import Container from 'components/Container/Container'
 import Form from 'components/Form/Form'
 import InfoTile from 'components/InfoTile/InfoTile'
@@ -28,23 +29,16 @@ const ForgotPassword = () => {
             return;
         }
 
-        if(query.email && query.code){
-            console.log(query)
-            const res = await fetch("/api/change-password", {
-                method: "POST",
-                body: JSON.stringify({
-                    email: query.email,
-                    code: query.code,
-                    password: inputs.password,
-                })
-            })
-
-            const data = await res.json()
-
-            if(data.status === 'success'){
-                setIsSuccess(true)
-            }else {
-                setErrorMsg(data.message)
+        if(
+            query.email && typeof query.email === 'string' 
+            && query.code && typeof query.code === 'string'
+            && query.password && typeof query.password === 'string'
+        ){
+            try {
+                await Auth.forgotPasswordSubmit(query.email, query.code, query.password)
+        
+            } catch (err) {
+                console.log(err);
             }
         }else {
             setErrorMsg("Url is invalid. Please try again to change your password")

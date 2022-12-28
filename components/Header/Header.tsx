@@ -9,10 +9,8 @@ const Header = () => {
   const router = useRouter()
 
   const handleLogout = () => {
-    localStorage.removeItem("user");
     Auth.signOut()
     router.push("/");
-    router.reload();
   }
 
   return (

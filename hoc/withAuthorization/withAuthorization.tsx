@@ -23,11 +23,13 @@ const withAuthorization = <T extends object>(Component: React.ComponentType<T>) 
     const [isLogged, setIsLogged] = useState<boolean>(false)
 
     const checkUser = async () => {
-        Auth.currentSession().then(res =>{
-            console.log(res);
-            setIsLogged(true)
-        }).catch(err=>{
-            console.log(err)
+        Auth.currentUserInfo().then(res =>{
+            if(res.username){
+                setIsLogged(true)
+            }else{
+                setIsLogged(false)
+            }
+        }).catch(()=>{
             setIsLogged(false)
         })
     }
