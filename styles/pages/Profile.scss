@@ -1,0 +1,32 @@
+.profilePage {
+    &__list{
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+        padding: 8px 32px;
+        list-style: none;
+    }
+
+    &__listItem {
+        font-size: 24px;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+
+        span {
+            color: rgb(27, 112, 223);
+            text-transform: capitalize;
+        }
+    }
+
+    &__dot{
+        width: 16px;
+        height: 16px;
+        background-color: red;
+        border-radius: 50%;
+
+        &--true {
+            background-color: lime;
+        }
+    }
+}
