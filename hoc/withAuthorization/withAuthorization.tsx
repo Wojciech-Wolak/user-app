@@ -3,7 +3,7 @@ import InfoTile from 'components/InfoTile/InfoTile'
 import { routes } from 'config/routes'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
-import { Amplify } from 'aws-amplify'
+import { Amplify, Auth } from 'aws-amplify'
 import React, { useEffect, useState } from 'react'
 
 const withAuthorization = <T extends object>(Component: React.ComponentType<T>) => {
@@ -23,14 +23,13 @@ const withAuthorization = <T extends object>(Component: React.ComponentType<T>) 
     const [isLogged, setIsLogged] = useState<boolean>(false)
 
     const checkUser = async () => {
-        const res = await fetch("/api/get-session")
-        const data = await res.json()
-
-        if(data.status === 'success'){
+        Auth.currentSession().then(res =>{
+            console.log(res);
             setIsLogged(true)
-        } else {
+        }).catch(err=>{
+            console.log(err)
             setIsLogged(false)
-        }
+        })
     }
 
     useEffect(()=> {
