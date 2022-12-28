@@ -4,6 +4,7 @@ import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { UserRegisterFields, UserVerificationFields } from 'types/User'
 import Form from 'components/Form/Form'
+import { Auth } from 'aws-amplify'
 
 const RegisterPage = () => {
     const router = useRouter();
@@ -26,17 +27,33 @@ const RegisterPage = () => {
     const handleRegister = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
 
-        const res = await fetch("/api/register", {
-            method: "POST",
-            body: JSON.stringify(inputs),
-        })
-        const data = await res.json();
+        const registerRes = await Auth.signUp({
+            password: inputs.password,
+            username: inputs.email,
+            attributes: {
+              email: inputs.email,
+              nickname: inputs.nickname,
+              given_name: inputs.firstname + inputs.lastname,
+              birthdate: inputs.birthdate,
+            },
+          }).then(res => {
+            console.log('register response ', res)
+          }).catch(err => {
+            alert("failure" + JSON.stringify(err, null, 4))
+          })
+        
 
-        if(data.status === 'success'){
-            setIsSigned(true)
-        }else {
-            setErrorMsg(data.message)
-        }
+        // const res = await fetch("/api/register", {
+        //     method: "POST",
+        //     body: JSON.stringify(inputs),
+        // })
+        // const data = await res.json();
+
+        // if(data.status === 'success'){
+        //     setIsSigned(true)
+        // }else {
+        //     setErrorMsg(data.message)
+        // }
     }
 
     const handleVerify = async (e: React.FormEvent<HTMLFormElement>) => {
