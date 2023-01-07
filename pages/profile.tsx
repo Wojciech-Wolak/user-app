@@ -30,7 +30,7 @@ const ProfilePage = () => {
     <Container>
         <ul className='profilePage__list'>
           {userData.map(attr => {
-            if(attr.Name === "sub") {
+            if(attr.Name === "sub" || attr.Name ==='custom:airtable') {
               return null
             }
 
