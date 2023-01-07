@@ -59,6 +59,7 @@ const LoginPage = () => {
                 onChange={(e) => setInputs(prev => ({...prev, password: e.target.value}))}
                 value={inputs.password}
                 name="password"
+                type="password"
                 placeholder="Password"
             />
             <button 
