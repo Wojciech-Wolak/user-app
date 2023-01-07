@@ -13,7 +13,7 @@ export type TaskAirtableType = {
         Content: string;
         Date: string;
         Title: string;
-        done?: boolean;
+        Done?: boolean;
     }
 }
 
@@ -21,6 +21,7 @@ export type ActionType =
     | {type: "add", payload: TaskType}
     | {type: "remove", payload: string}
     | {type: "reset"}
+    | {type: "update", payload: TaskType}
 
 export type TaskSectionProps = {
     title?: string;

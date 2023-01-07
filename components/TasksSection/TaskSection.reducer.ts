@@ -12,6 +12,14 @@ export const taskReducer: Reducer<TaskType[], ActionType> = (state, action) => {
         case "reset": {
             return []
         }
+        case "update": {
+            return state.map(task => {
+                if(task.id === action.payload.id){
+                    return action.payload
+                }
+                else return task
+            })
+        }
         default :{
             return [...state]
         }

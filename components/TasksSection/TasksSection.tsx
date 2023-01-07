@@ -17,7 +17,7 @@ const TasksSection = ({ title }: TaskSectionProps) => {
                 content: record.fields.Content,
                 date: new Date(record.createdTime),
                 title: record.fields.Title,
-                done: record.fields.done || false
+                done: record.fields.Done || false
             }})
         })
     }
@@ -113,6 +113,39 @@ const TasksSection = ({ title }: TaskSectionProps) => {
         })
     }
 
+    const changeDoneHandler = (id:string, newValue: boolean) => {
+        checkUser(attributes => {
+            const airtableData = attributes.find(attr => attr.Name === "custom:airtable") 
+
+            if(!airtableData?.Value){
+                return;
+            }
+            const data = JSON.parse(airtableData?.Value)
+
+            fetch("/api/change-done", {
+                method: "POST",
+                body: JSON.stringify({
+                    baseID: data.baseID,
+                    done: newValue,
+                    id,
+                })
+            }).then(res => {
+               return res.json();
+            }).then(({data}) => {
+                data.records.forEach((record: TaskAirtableType) => {
+                    dispatch({type:"update", payload:{
+                        id: record.id,
+                        content: record.fields.Content,
+                        date: new Date(record.createdTime),
+                        title: record.fields.Title,
+                        done: record.fields.Done || false
+                    }})
+                })
+                
+            })
+        })
+    }
+
   return (
     <div className='taskSection'>
         {title ? <h2 className='taskSection__heading' >{title}</h2> : null}
@@ -142,7 +175,7 @@ const TasksSection = ({ title }: TaskSectionProps) => {
             {tasks.map(task => (
                 <TaskItem 
                     key={task.id} 
-                    // removeHandler={id => } 
+                    changeDoneHandler={() => changeDoneHandler(task.id, !task.done)}
                     removeHandler={() => handleRemove(task.id)}
                     {...task}  
                     />

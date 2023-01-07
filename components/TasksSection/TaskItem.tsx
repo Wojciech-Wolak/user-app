@@ -2,7 +2,7 @@ import React from 'react'
 import { formatDate } from 'utils/formatDate'
 import { TaskType } from './TaskSection.types'
 
-const TaskItem = ({content, date, done, title, id, removeHandler}: TaskType & {removeHandler: (id: string) => void}) => {
+const TaskItem = ({content, date, done, title, id, removeHandler, changeDoneHandler}: TaskType & Record<'changeDoneHandler' | 'removeHandler',  (id: string) => void>) => {
   return (
     <li className='taskSection__listItem'>
     <div className='taskSection__listItemContent'>
@@ -14,6 +14,7 @@ const TaskItem = ({content, date, done, title, id, removeHandler}: TaskType & {r
     </span>
     <button
         className='taskSection__listItemChangeDoneBtn'
+        onClick={() => changeDoneHandler(id)}
     >
         Done: {done ? "🟢" : "🔴"}
     </button>
