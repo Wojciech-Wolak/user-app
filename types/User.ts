@@ -7,6 +7,7 @@ export type UserRegisterFields = {
     email: string;
     birthdate: string;
     'custom:city': string
+    'custom:airtable': string
 }
 
 export type UserVerificationFields = {

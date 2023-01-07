@@ -21,6 +21,23 @@ const LoginPage = () => {
 
             if(user.username){
                 router.push("/")
+                Auth.userAttributes(user).then(res => {
+                    console.log(res)
+                    if(!res.find(el => el.Name === "custom:airtable")){
+                        fetch("/api/create-base", {
+                            method: "POST",
+                            body: JSON.stringify({
+                                email: inputs.email
+                            })
+                        }).then(res => {
+                            return res.json()
+                        }).then(({data}) => {
+                            Auth.updateUserAttributes(user, {
+                                "custom:airtable": JSON.stringify({...Object.fromEntries(data.tables.map((table: {name:string, id:string}) => [table.name, table.id])), baseID: data.id})
+                            })
+                        })
+                    }
+                })
             }
           } catch (err) {
             setErrorMsg(err?.toString().replace(/([a-zA-Z]+:)/g, "") || "Something went wrong");

@@ -11,7 +11,7 @@ const RegisterPage = () => {
     const [isSuccess, setIsSuccess]= useState<boolean>(false);
     const [isSigned, setIsSigned] = useState<boolean>(false);
     const [errorMsg, setErrorMsg] = useState<string>("");
-    const [inputs, setInputs] = useState<Omit<UserRegisterFields, "custom:city">>({
+    const [inputs, setInputs] = useState<Omit<UserRegisterFields, "custom:city" | "custom:airtable">>({
         nickname: "",
         firstname: "",
         lastname: "",
@@ -37,8 +37,14 @@ const RegisterPage = () => {
                   nickname: inputs.nickname,
                   given_name: inputs.firstname + inputs.lastname,
                   birthdate: inputs.birthdate,
+                  "custom:airtable": ""
                 },
               })
+
+              console.log(registerRes);
+
+
+              
 
               if(registerRes.codeDeliveryDetails.AttributeName){
                 setVerificationInputs(prev => ({...prev, username: inputs.email}))
@@ -56,7 +62,7 @@ const RegisterPage = () => {
             const response = await Auth.confirmSignUp(verificationInputs.username, verificationInputs.code);
 
             if(response === 'SUCCESS'){
-                setIsSuccess(true)
+                setIsSuccess(true);
             }
         } catch (err) {
             setErrorMsg(err?.toString().replace(/([a-zA-Z]+:)/g, "") || "Something went wrong");
@@ -76,7 +82,7 @@ const RegisterPage = () => {
         }
     }
 
-    const registerFields: React.ComponentProps<typeof Form<keyof Omit<UserRegisterFields, "custom:city">>>['fields'] = [
+    const registerFields: React.ComponentProps<typeof Form<keyof Omit<UserRegisterFields, "custom:city" | "custom:airtable">>>['fields'] = [
         {name: "nickname", label:"Nickname", type: "text"},
         {name: "firstname", label:"First name", type: "text"},
         {name: "lastname", label:"Last name", type: "text"},
@@ -138,7 +144,7 @@ const RegisterPage = () => {
 
   return (
     <Container className='register'>
-        <Form<keyof Omit<UserRegisterFields, "custom:city">> 
+        <Form<keyof Omit<UserRegisterFields, "custom:city" | "custom:airtable">> 
             heading='Sign Up'
             fields={registerFields}
             errorMsg={errorMsg}
