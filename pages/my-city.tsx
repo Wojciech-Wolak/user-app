@@ -52,24 +52,42 @@ const CityPage = () => {
     })
   }, [])
 
-  if(isLoading || !data){
-    return <h1>Loading...</h1>
+  if(isLoading){
+    return (
+      <Container className='my-city__errorContainer'>
+          <InfoTile title="Loading...">
+            We are loading your city data
+          </InfoTile>
+      </Container>
+    )
   }
 
   if(errorMsg){
     return (
-        <Container className='my-city__errorContainer'>
-            <InfoTile title="Something went wrong">
-              {errorMsg}
-            </InfoTile>
-        </Container>
+      <Container className='my-city__errorContainer'>
+          <InfoTile title="Something went wrong">
+            {errorMsg}
+          </InfoTile>
+      </Container>
     )
   }
 
   if(error){
-    return <div>
-      <h2>Something went wrong</h2>
-    </div>
+    return (
+      <div>
+        <h2>Something went wrong</h2>
+      </div>
+    )
+  }
+
+  if(!data) {
+    return (
+      <Container className='my-city__errorContainer'>
+          <InfoTile title="Something went wrong">
+                <h1>It is posible, that you have not selected default city 😞</h1>
+          </InfoTile>
+      </Container>
+    )
   }
 
   const Map = dynamic(()=>import("components/Map/Map"));
