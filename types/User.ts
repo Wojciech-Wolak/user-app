@@ -9,7 +9,8 @@ export type UserRegisterFields = {
 }
 
 export type UserVerificationFields = {
-    code: string
+    username: string;
+    code: string;
 }
 
 export type UserForgotPasswordEmailFields = {

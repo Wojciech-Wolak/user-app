@@ -21,69 +21,67 @@ const RegisterPage = () => {
         birthdate: ''
     })
     const [verificationInputs, setVerificationInputs] = useState<UserVerificationFields>({
+        username: "",
         code: ""
     })
 
     const handleRegister = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
 
-        const registerRes = await Auth.signUp({
-            password: inputs.password,
-            username: inputs.email,
-            attributes: {
-              email: inputs.email,
-              nickname: inputs.nickname,
-              given_name: inputs.firstname + inputs.lastname,
-              birthdate: inputs.birthdate,
-            },
-          }).then(res => {
-            console.log('register response ', res)
-          }).catch(err => {
+        try{
+            const registerRes = await Auth.signUp({
+                password: inputs.password,
+                username: inputs.email,
+                attributes: {
+                  email: inputs.email,
+                  nickname: inputs.nickname,
+                  given_name: inputs.firstname + inputs.lastname,
+                  birthdate: inputs.birthdate,
+                },
+              })
+
+              if(registerRes.codeDeliveryDetails.AttributeName){
+                setVerificationInputs(prev => ({...prev, username: inputs.email}))
+                setIsSigned(true)
+              }
+        }catch(err){
             alert("failure" + JSON.stringify(err, null, 4))
-          })
-        
-
-        // const res = await fetch("/api/register", {
-        //     method: "POST",
-        //     body: JSON.stringify(inputs),
-        // })
-        // const data = await res.json();
-
-        // if(data.status === 'success'){
-        //     setIsSigned(true)
-        // }else {
-        //     setErrorMsg(data.message)
-        // }
+        }
     }
 
     const handleVerify = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
 
-        const res = await fetch("/api/verify-account", {
-            method: "POST",
-            body: JSON.stringify({email: inputs.email, code: verificationInputs.code}),
-        })
-        const data = await res.json();
+        try {
+            const response = await Auth.confirmSignUp(verificationInputs.username, verificationInputs.code);
 
-        if(data.status === 'success'){
-            setIsSuccess(true)
-        }else {
-            setErrorMsg(data.message)
+            if(response === 'SUCCESS'){
+                setIsSuccess(true)
+            }
+        } catch (err) {
+            setErrorMsg(err?.toString().replace(/([a-zA-Z]+:)/g, "") || "Something went wrong");
         }
     }
 
     const handleResendCode = async () => {
+        try{
+            const response = await Auth.resendSignUp(verificationInputs.username);
+            if(response.status === 'success'){
+                setIsSigned(true)
+            }else{
+
+            }
+        }catch(err){
+            setErrorMsg(err?.toString().replace(/([a-zA-Z]+:)/g, "") || "Something went wrong")
+        }
+
         const res = await fetch("/api/resend-verification-code", {
             method: "POST",
-            body: JSON.stringify({email: inputs.email}),
+            body: JSON.stringify({email: verificationInputs.username}),
         })
         const data = await res.json();
 
-        if(data.status === 'success'){
-            setIsSigned(true)
-        }else {
-            setErrorMsg(data.message)
-        }
+        
     }
 
     const registerFields: React.ComponentProps<typeof Form<keyof UserRegisterFields>>['fields'] = [
@@ -97,14 +95,25 @@ const RegisterPage = () => {
     ]
 
     const verificationFields: React.ComponentProps<typeof Form<keyof UserVerificationFields>>['fields'] = [
+        {name: "username", label:"E-mail", type: "email", },
         {name: "code", label:"Verification Code", type: "text", },
     ]
 
     if(isSuccess){
         return (
-            <Container>
-                Success!!!!11
-                <button onClick={()=>router.push("/login")}>Go to login page</button>
+            <Container className='register'>
+                <Form<keyof UserVerificationFields> 
+                    heading='Successfully you are signed up and verified!'
+                    errorMsg={errorMsg}
+                    handleChange={(name, value) => setVerificationInputs(prev => ({...prev, [name]: value}))}
+                    buttons={[
+                        {
+                            content: 'Go to login page',
+                            type: 'button',
+                            onClick: ()=>router.push("/login")
+                        }
+                    ]}
+                />
             </Container>
         )
     }

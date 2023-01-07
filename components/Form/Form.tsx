@@ -6,7 +6,7 @@ const Form = <T extends string>({ heading, handler, fields, handleChange, inputs
   return (
     <form className='form' onSubmit={handler}>
             <h2 className='form__heading'>{heading}</h2>
-            {fields.map(field => (
+            {fields && inputs ? fields.map(field => (
                 <label key={field.name}>
                     <h3 className='form__inputHeading'>{field.label}</h3>
                     <input 
@@ -18,7 +18,7 @@ const Form = <T extends string>({ heading, handler, fields, handleChange, inputs
                         type={field.type}
                     />
                 </label>
-            ))}
+            )): null}
             {errorMsg ? <p className='form__errorMsg'>{errorMsg}</p>:null}
             {buttons.map(button => 'href' in button 
                 ? <Link key={button.content} className='form__link' href={button.href}>{button.content}</Link> 
