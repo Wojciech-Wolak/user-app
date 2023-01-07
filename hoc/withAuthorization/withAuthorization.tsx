@@ -29,7 +29,8 @@ const withAuthorization = <T extends object>(Component: React.ComponentType<T>) 
             }else{
                 setIsLogged(false)
             }
-        }).catch(()=>{
+        }).catch((err)=>{
+            console.log(err)
             setIsLogged(false)
         })
     }

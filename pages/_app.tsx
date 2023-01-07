@@ -23,7 +23,7 @@ function App({ Component, pageProps }: AppProps) {
       <Head>
         {actualRoute?.name ? <title>{actualRoute.name}</title> : null}
       </Head>
-      <Header />
+      {actualRoute?.showNav ? <Header /> : null}
       <Component {...pageProps} />
     </QueryClientProvider>
   )
