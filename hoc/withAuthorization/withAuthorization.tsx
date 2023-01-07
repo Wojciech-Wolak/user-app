@@ -13,7 +13,6 @@ const withAuthorization = <T extends object>(Component: React.ComponentType<T>) 
   return function Hoc(props: T) {
             Amplify.configure({
                 Auth: {
-                  identityPoolId: process.env.NEXT_PUBLIC_AWS_IDENTITY_POOL_ID,
                   region: process.env.NEXT_PUBLIC_AWS_MY_REGION,
                   userPoolId: process.env.NEXT_PUBLIC_AWS_USER_POOL_ID,
                   userPoolWebClientId: process.env.NEXT_PUBLIC_USER_POOL_WEB_CLIENT_ID,
@@ -26,17 +25,16 @@ const withAuthorization = <T extends object>(Component: React.ComponentType<T>) 
     const [isLogged, setIsLogged] = useState<boolean>(false)
 
     const checkUser = async () => {
-        try {
-            await Auth.currentAuthenticatedUser().then(res =>{
-                if(res.username){
+            Auth.currentSession().then(res => {
+                if(res.getAccessToken()){
                     setIsLogged(true)
                 }else{
                     setIsLogged(false)
                 }
+            }).catch(err=>{
+                setIsLogged(false)
             })
-        }catch (err) {
-            setIsLogged(false)
-        }
+            
     }
 
     useEffect(()=> {
