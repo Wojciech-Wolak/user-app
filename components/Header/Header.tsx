@@ -10,7 +10,7 @@ const Header = () => {
 
   const handleLogout = () => {
     Auth.signOut()
-    router.push("/");
+    router.push("/").then(()=> router.reload());
   }
 
   return (

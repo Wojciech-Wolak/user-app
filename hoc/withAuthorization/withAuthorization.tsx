@@ -26,7 +26,7 @@ const withAuthorization = <T extends object>(Component: React.ComponentType<T>) 
 
     const checkUser = async () => {
             Auth.currentSession().then(res => {
-                if(res.getAccessToken()){
+                if(res && res.getAccessToken()){
                     setIsLogged(true)
                 }else{
                     setIsLogged(false)
