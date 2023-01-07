@@ -9,6 +9,9 @@ export const taskReducer: Reducer<TaskType[], ActionType> = (state, action) => {
         case "remove":{
             return state.filter(task => task.id !== action.payload)
         }
+        case "reset": {
+            return []
+        }
         default :{
             return [...state]
         }
