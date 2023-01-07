@@ -33,14 +33,20 @@ export const routes: RouteType[] = [
     requireLogin: false,
   },
   {
+    path: "/new-password",
+    name: "New Password",
+    showInNav: false,
+    requireLogin: false,
+  },
+  {
     path: "/login",
-    name: "Forgot Password",
+    name: "Login",
     showInNav: false,
     requireLogin: false,
   },
   {
     path: "/register",
-    name: "Forgot Password",
+    name: "Register new account",
     showInNav: false,
     requireLogin: false,
   },

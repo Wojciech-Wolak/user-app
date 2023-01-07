@@ -5,6 +5,8 @@ import { useRouter } from 'next/router'
 import { Auth } from 'aws-amplify'
 
 const LoginPage = () => {
+    const router = useRouter()
+
     const [errorMsg, setErrorMsg] = useState<string>("")
     const [inputs, setInputs] = useState<{email:string, password:string}>({
         email: "",
@@ -16,10 +18,12 @@ const LoginPage = () => {
 
         try {
             const user = await Auth.signIn(inputs.email, inputs.password);
-            console.log(user)
-            alert("success")
+
+            if(user.username){
+                router.push("/")
+            }
           } catch (err) {
-            alert("failure" + JSON.stringify(err, null , 4))
+            setErrorMsg(err?.toString().replace(/([a-zA-Z]+:)/g, "") || "Something went wrong");
           }
     }
 
