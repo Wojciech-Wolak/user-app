@@ -11,7 +11,7 @@ const RegisterPage = () => {
     const [isSuccess, setIsSuccess]= useState<boolean>(false);
     const [isSigned, setIsSigned] = useState<boolean>(false);
     const [errorMsg, setErrorMsg] = useState<string>("");
-    const [inputs, setInputs] = useState<UserRegisterFields>({
+    const [inputs, setInputs] = useState<Omit<UserRegisterFields, "custom:city">>({
         nickname: "",
         firstname: "",
         lastname: "",
@@ -76,7 +76,7 @@ const RegisterPage = () => {
         }
     }
 
-    const registerFields: React.ComponentProps<typeof Form<keyof UserRegisterFields>>['fields'] = [
+    const registerFields: React.ComponentProps<typeof Form<keyof Omit<UserRegisterFields, "custom:city">>>['fields'] = [
         {name: "nickname", label:"Nickname", type: "text"},
         {name: "firstname", label:"First name", type: "text"},
         {name: "lastname", label:"Last name", type: "text"},
@@ -138,7 +138,7 @@ const RegisterPage = () => {
 
   return (
     <Container className='register'>
-        <Form<keyof UserRegisterFields> 
+        <Form<keyof Omit<UserRegisterFields, "custom:city">> 
             heading='Sign Up'
             fields={registerFields}
             errorMsg={errorMsg}

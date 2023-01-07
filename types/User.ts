@@ -6,6 +6,7 @@ export type UserRegisterFields = {
     confirmPassword: string; 
     email: string;
     birthdate: string;
+    'custom:city': string
 }
 
 export type UserVerificationFields = {
