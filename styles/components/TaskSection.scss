@@ -40,6 +40,10 @@
         list-style: none;
         padding: 0;
         margin: 0;
+
+        &--loading {
+            text-align: center;
+        }
     }
 
     &__listItem {

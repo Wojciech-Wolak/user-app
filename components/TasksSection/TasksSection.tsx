@@ -9,6 +9,7 @@ import type { CognitoUserAttribute } from "amazon-cognito-identity-js"
 const TasksSection = ({ title }: TaskSectionProps) => {
     const [inputValues, setInputValues] = useState<{title:string, content:string}>({content:"",title:""})
     const [tasks, dispatch] = useReducer(taskReducer, [])
+    const [isLoading, setIsLoading] = useState<boolean>(false)
 
     const addTasks = (records:TaskAirtableType[]) => {
         records.forEach((record: TaskAirtableType) => {
@@ -33,6 +34,7 @@ const TasksSection = ({ title }: TaskSectionProps) => {
     }
 
     useEffect(()=> {
+        setIsLoading(true)
         checkUser(attributes => {
             const airtableData = attributes.find(attr => attr.Name === "custom:airtable") 
 
@@ -52,11 +54,13 @@ const TasksSection = ({ title }: TaskSectionProps) => {
             }).then(({data}) => {
                 dispatch({type:"reset"})
                 addTasks(data.records)
+                setIsLoading(false)
             })
         })
     }, [])
 
     const handleAdd = () =>{
+        setIsLoading(true)
         if(inputValues.title.length){
             checkUser(attributes => {
                 const airtableData = attributes.find(attr => attr.Name === "custom:airtable") 
@@ -79,6 +83,7 @@ const TasksSection = ({ title }: TaskSectionProps) => {
                    return res.json();
                 }).then(({data}) => {
                     addTasks(data.records)
+                    setIsLoading(false)
                 })
             })
             
@@ -180,6 +185,11 @@ const TasksSection = ({ title }: TaskSectionProps) => {
                     {...task}  
                     />
             ))}
+            {isLoading ? (
+                <li className='taskSection__list taskSection__list--loading'>
+                    <h2>Loading...</h2>
+                </li>
+            ) : null}
         </ul>
     </div>
   )

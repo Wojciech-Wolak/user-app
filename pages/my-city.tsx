@@ -52,7 +52,7 @@ const CityPage = () => {
     })
   }, [])
 
-  if(isLoading && !data){
+  if(isLoading || !data){
     return <h1>Loading...</h1>
   }
 
@@ -66,40 +66,20 @@ const CityPage = () => {
     )
   }
 
-  if(error || !data?.result){
+  if(error){
     return <div>
-      <pre>
-        {JSON.stringify(error, null, 2)}
-      </pre>
+      <h2>Something went wrong</h2>
     </div>
   }
 
   const Map = dynamic(()=>import("components/Map/Map"));
   const WeatherCharts = dynamic(()=>import("components/WeatherCharts/WeatherCharts"));
 
-  const handleSignDefaultCity = () => {
-    Auth.currentAuthenticatedUser().then(user => {
-      Auth.updateUserAttributes(user, {
-        "custom:city": JSON.stringify({
-          city: data.result.name,
-          lat: data.result.latitude,
-          lng: data.result.longitude,
-          id: data.result.id
-        })
-      })
-    }).catch(err => {
-      console.log(err.toString())
-    })
-  }
-
   return (
     <div>
       <Head>
         <title>{data.result.name}</title>
       </Head>
-      <Container className='city__signDefault'>
-        <button className='city__signDefaultButton' onClick={handleSignDefaultCity}>Sign as default city ✅</button>
-      </Container>
       <Container className='city__wrapper'>
         <CountryTable country={data.result} />
         <Map lng={data.result.longitude} lat={data.result.latitude} />

@@ -35,7 +35,7 @@ const Search = () => {
     return data?.results.map((el) => (
       <li key={el.id} className="search__listItem">
         <Link href={`/${kebabCase(el.name)}?id=${el.id}`} onClick={() => setSearchValue("")}>
-          {el.name}
+          {el.name} {el.admin1}
         </Link>
       </li>
     ));
