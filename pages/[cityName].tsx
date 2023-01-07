@@ -45,6 +45,9 @@ const CityPage = () => {
       <Head>
         <title>{data.result.name}</title>
       </Head>
+      <Container className='city__signDefault'>
+        <button className='city__signDefaultButton'>Sign as default city ✅</button>
+      </Container>
       <Container className='city__wrapper'>
         <CountryTable country={data.result} />
         <Map lng={data.result.longitude} lat={data.result.latitude} />
