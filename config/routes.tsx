@@ -27,6 +27,12 @@ export const routes: RouteType[] = [
     requireLogin: true,
   },
   {
+    path: "/my-city",
+    name: "Moje miasto",
+    showInNav: true,
+    requireLogin: true,
+  },
+  {
     path: "/forgot-password",
     name: "Forgot Password",
     showInNav: false,

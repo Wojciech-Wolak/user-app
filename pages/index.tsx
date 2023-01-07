@@ -1,6 +1,8 @@
 import Container from 'components/Container/Container'
 import TasksSection from 'components/TasksSection/TasksSection'
 import Head from 'next/head'
+import { useQuery } from 'react-query'
+import { CityType } from 'types/City'
 
 export default function Home() {
   return (
