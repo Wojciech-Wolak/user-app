@@ -74,14 +74,6 @@ const RegisterPage = () => {
         }catch(err){
             setErrorMsg(err?.toString().replace(/([a-zA-Z]+:)/g, "") || "Something went wrong")
         }
-
-        const res = await fetch("/api/resend-verification-code", {
-            method: "POST",
-            body: JSON.stringify({email: verificationInputs.username}),
-        })
-        const data = await res.json();
-
-        
     }
 
     const registerFields: React.ComponentProps<typeof Form<keyof UserRegisterFields>>['fields'] = [

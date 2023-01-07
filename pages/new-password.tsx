@@ -24,6 +24,11 @@ const ForgotPassword = () => {
         e.preventDefault()
         const { query } = router
 
+        if(!inputs.password){
+            setErrorMsg("Please pass password")
+            return;
+        }
+
         if(inputs.password !== inputs.confirmPassword){
             setErrorMsg("Password are different")
             return;
@@ -32,13 +37,15 @@ const ForgotPassword = () => {
         if(
             query.email && typeof query.email === 'string' 
             && query.code && typeof query.code === 'string'
-            && query.password && typeof query.password === 'string'
         ){
             try {
-                await Auth.forgotPasswordSubmit(query.email, query.code, query.password)
+                const response = await Auth.forgotPasswordSubmit(query.email.replace(" ", "+"), query.code, inputs.password)
         
+                if(response === 'SUCCESS'){
+                    setIsSuccess(true)
+                }
             } catch (err) {
-                console.log(err);
+                setErrorMsg(err?.toString().replace(/([a-zA-Z]+:)/g, "") || "Something went wrong");
             }
         }else {
             setErrorMsg("Url is invalid. Please try again to change your password")

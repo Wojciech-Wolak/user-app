@@ -1,3 +1,4 @@
+import { Auth } from 'aws-amplify'
 import Container from 'components/Container/Container'
 import Form from 'components/Form/Form'
 import { useRouter } from 'next/router'
@@ -26,21 +27,12 @@ const ForgotPassword = () => {
     const sendCode = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
 
-        const res = await fetch("/api/send-change-password-code", {
-            method: 'POST',
-            body: JSON.stringify({
-                email: inputs.email,
-            })
-        })
-
-        const data = await res.json();
-
-        console.log(data);
-
-        if(data.status === 'success'){
+        try {
+            await Auth.forgotPassword(inputs.email)
+    
             setIsValidEmail(true)
-        }else {
-            setErrorMsg(data.message)
+        } catch (err) {
+            setErrorMsg(err?.toString().replace(/([a-zA-Z]+:)/g, "") || "Something went wrong");
         }
     }
 
