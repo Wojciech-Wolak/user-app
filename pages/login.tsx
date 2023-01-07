@@ -22,7 +22,6 @@ const LoginPage = () => {
             if(user.username){
                 router.push("/")
                 Auth.userAttributes(user).then(res => {
-                    console.log(res)
                     if(!res.find(el => el.Name === "custom:airtable")){
                         fetch("/api/create-base", {
                             method: "POST",

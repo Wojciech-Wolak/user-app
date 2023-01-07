@@ -41,11 +41,6 @@ const RegisterPage = () => {
                 },
               })
 
-              console.log(registerRes);
-
-
-              
-
               if(registerRes.codeDeliveryDetails.AttributeName){
                 setVerificationInputs(prev => ({...prev, username: inputs.email}))
                 setIsSigned(true)

@@ -8,31 +8,35 @@ import React, { useEffect, useState } from 'react'
 
 const withAuthorization = <T extends object>(Component: React.ComponentType<T>) => {
 
+   
+
   return function Hoc(props: T) {
-    Amplify.configure({
-        Auth: {
-          identityPoolId: process.env.NEXT_PUBLIC_AWS_IDENTITY_POOL_ID,
-          region: process.env.NEXT_PUBLIC_AWS_MY_REGION,
-          userPoolId: process.env.NEXT_PUBLIC_AWS_USER_POOL_ID,
-          userPoolWebClientId: process.env.NEXT_PUBLIC_USER_POOL_WEB_CLIENT_ID,
-          mandatorySignIn: false,
-        },
-        ssr: true,
-      });
+            Amplify.configure({
+                Auth: {
+                  identityPoolId: process.env.NEXT_PUBLIC_AWS_IDENTITY_POOL_ID,
+                  region: process.env.NEXT_PUBLIC_AWS_MY_REGION,
+                  userPoolId: process.env.NEXT_PUBLIC_AWS_USER_POOL_ID,
+                  userPoolWebClientId: process.env.NEXT_PUBLIC_USER_POOL_WEB_CLIENT_ID,
+                  mandatorySignIn: false,
+                },
+                ssr: true,
+              });
+    
     const { pathname } = useRouter()
     const [isLogged, setIsLogged] = useState<boolean>(false)
 
     const checkUser = async () => {
-        Auth.currentUserInfo().then(res =>{
-            if(res.username){
-                setIsLogged(true)
-            }else{
-                setIsLogged(false)
-            }
-        }).catch((err)=>{
-            console.log("Error: ", err)
+        try {
+            await Auth.currentAuthenticatedUser().then(res =>{
+                if(res.username){
+                    setIsLogged(true)
+                }else{
+                    setIsLogged(false)
+                }
+            })
+        }catch (err) {
             setIsLogged(false)
-        })
+        }
     }
 
     useEffect(()=> {

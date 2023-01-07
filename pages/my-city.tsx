@@ -87,7 +87,6 @@ const CityPage = () => {
           id: data.result.id
         })
       })
-      console.log(user)
     }).catch(err => {
       console.log(err.toString())
     })
