@@ -7,20 +7,31 @@
         padding: 0 16px;
     }
 
-    &__inputWrapper {
+    &__formWrapper {
         padding: 16px;
         gap: 16px;
         border-bottom: 1px solid gray;
         display: flex;
     }
 
-    &__input {
+    &__inputsWrapper {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
         flex: 1;
     }
 
+    &__input,
+    &__textarea {
+        font-size: 18px;
+        padding: 8px;
+    }
+
     &__inputButton {
-        padding: 4px 16px;
+        padding: 4px 32px;
         cursor: pointer;
+        align-self: center;
+        font-size: 18px;
     }
 
     &__list {
@@ -44,11 +55,25 @@
 
     &__listItemContent {
         flex:1;
+
+        h3 {
+            margin: 0;
+        }
+
+        p {
+            margin: 4px 0;
+        }
+    }
+
+    &__listItemChangeDoneBtn {
+        padding: 12px;
+        border: none;
+        cursor: pointer;
     }
 
     &__listItemRemoveBtn {
-        padding: 8px;
-        bordeR: none;
+        padding: 12px;
+        border: none;
         cursor: pointer;
     }
 }
